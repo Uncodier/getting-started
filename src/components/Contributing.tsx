@@ -378,7 +378,7 @@ npm test`}
               href="https://github.com/your-org/makinari"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 px-6 py-3 bg-accent text-accent-foreground font-medium rounded-lg hover:bg-accent/90 transition-colors"
+              className="inline-flex items-center space-x-2 px-6 py-3 btn-primary font-medium rounded-lg"
             >
               <Github className="h-5 w-5" />
               <span>GitHub</span>

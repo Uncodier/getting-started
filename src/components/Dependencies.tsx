@@ -359,7 +359,7 @@ export default function Dependencies() {
                   href={service.docs}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-sm text-accent hover:text-accent/80 transition-colors"
+                  className="flex items-center space-x-1 text-sm text-foreground transition-colors"
                 >
                   <span>Documentation</span>
                   <ExternalLink className="h-3 w-3" />

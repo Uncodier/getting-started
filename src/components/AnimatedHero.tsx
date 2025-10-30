@@ -105,10 +105,10 @@ export default function AnimatedHero() {
           <div className="space-y-8">
             <motion.h1
               ref={titleRef}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-normal pb-1 sm:pb-2 overflow-visible"
             >
               <span className="block text-foreground">AI-Powered</span>
-              <span className="block bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent leading-relaxed pb-1">
                 Growth Engine
               </span>
             </motion.h1>
@@ -131,7 +131,7 @@ export default function AnimatedHero() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-lg hover:bg-accent/90 transition-colors"
+                className="btn-primary px-8 py-4 font-semibold rounded-lg"
               >
                 <Play className="h-5 w-5 mr-2" />
                 Get Started

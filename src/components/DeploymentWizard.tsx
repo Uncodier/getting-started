@@ -216,7 +216,7 @@ export default function DeploymentWizard() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                         activeTab === tab.id
-                          ? 'bg-accent text-accent-foreground'
+                          ? 'btn-primary'
                           : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >

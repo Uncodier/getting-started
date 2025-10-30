@@ -29,13 +29,13 @@ export default function Footer() {
                 href="https://github.com/your-org/makinari"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-accent transition-colors"
+                className="text-muted-foreground transition-colors"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
                 href="mailto:support@makinari.com"
-                className="text-muted-foreground hover:text-accent transition-colors"
+                className="text-muted-foreground transition-colors"
               >
                 <Mail className="h-5 w-5" />
               </a>
@@ -47,17 +47,17 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">Documentation</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/architecture" className="text-muted-foreground hover:text-accent transition-colors">
+                <Link href="/architecture" className="text-muted-foreground transition-colors">
                   Architecture
                 </Link>
               </li>
               <li>
-                <Link href="/deployment" className="text-muted-foreground hover:text-accent transition-colors">
+                <Link href="/deployment" className="text-muted-foreground transition-colors">
                   Deployment
                 </Link>
               </li>
               <li>
-                <Link href="/best-practices" className="text-muted-foreground hover:text-accent transition-colors">
+                <Link href="/best-practices" className="text-muted-foreground transition-colors">
                   Best Practices
                 </Link>
               </li>
@@ -73,7 +73,7 @@ export default function Footer() {
                   href="https://github.com/your-org/market-fit"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-muted-foreground hover:text-accent transition-colors"
+                  className="flex items-center space-x-1 text-muted-foreground transition-colors"
                 >
                   <span>market-fit</span>
                   <ExternalLink className="h-3 w-3" />
@@ -84,7 +84,7 @@ export default function Footer() {
                   href="https://github.com/your-org/api"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-muted-foreground hover:text-accent transition-colors"
+                  className="flex items-center space-x-1 text-muted-foreground transition-colors"
                 >
                   <span>api</span>
                   <ExternalLink className="h-3 w-3" />
@@ -95,7 +95,7 @@ export default function Footer() {
                   href="https://github.com/your-org/workflows"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-muted-foreground hover:text-accent transition-colors"
+                  className="flex items-center space-x-1 text-muted-foreground transition-colors"
                 >
                   <span>workflows</span>
                   <ExternalLink className="h-3 w-3" />
@@ -111,20 +111,20 @@ export default function Footer() {
               © 2024 Makinari. Licensed under AGPL-3.0.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/contributing" className="text-sm text-muted-foreground hover:text-accent transition-colors">
+              <Link href="/contributing" className="text-sm text-muted-foreground transition-colors">
                 Contributing
               </Link>
               <a
                 href="https://github.com/your-org/makinari/blob/main/LICENSE"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-accent transition-colors"
+                className="text-sm text-muted-foreground transition-colors"
               >
                 License
               </a>
               <a
                 href="mailto:security@makinari.com"
-                className="text-sm text-muted-foreground hover:text-accent transition-colors"
+                className="text-sm text-muted-foreground transition-colors"
               >
                 Security
               </a>

@@ -70,9 +70,9 @@ export default function Navigation() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-accent",
+                  "text-sm font-medium transition-colors text-foreground",
                   pathname === item.href
-                    ? "text-accent"
+                    ? "text-foreground font-semibold"
                     : "text-muted-foreground"
                 )}
               >
@@ -82,7 +82,7 @@ export default function Navigation() {
             
             {/* Repository Dropdown */}
             <div className="relative group">
-              <button className="flex items-center space-x-1 text-sm font-medium text-muted-foreground hover:text-accent transition-colors">
+              <button className="flex items-center space-x-1 text-sm font-medium text-muted-foreground transition-colors">
                 <Github className="h-4 w-4" />
                 <span>Repositories</span>
               </button>
@@ -117,7 +117,7 @@ export default function Navigation() {
           <div className="md:hidden flex items-center space-x-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
+              className="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:bg-muted transition-colors"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -142,8 +142,8 @@ export default function Navigation() {
                     className={cn(
                       "block px-3 py-2 rounded-md text-base font-medium transition-colors",
                       pathname === item.href
-                        ? "text-accent bg-accent/10"
-                        : "text-muted-foreground hover:text-accent hover:bg-muted"
+                        ? "text-foreground bg-muted"
+                        : "text-muted-foreground hover:bg-muted"
                     )}
                   >
                     {item.name}
@@ -161,7 +161,7 @@ export default function Navigation() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-between px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
+                      className="flex items-center justify-between px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-muted transition-colors"
                     >
                       <div>
                         <div className="font-medium">{repo.name}</div>

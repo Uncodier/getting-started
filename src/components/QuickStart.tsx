@@ -190,7 +190,7 @@ export default function QuickStart() {
                   href={repositories[selectedRepo].link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-1 text-sm text-accent hover:text-accent/80 transition-colors"
+                  className="flex items-center space-x-1 text-sm text-foreground transition-colors"
                 >
                   <Github className="h-4 w-4" />
                   <span>View on GitHub</span>
@@ -236,7 +236,7 @@ export default function QuickStart() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-accent text-accent-foreground font-medium rounded-lg hover:bg-accent/90 transition-colors"
+              className="btn-primary px-6 py-3 font-medium rounded-lg"
             >
               View Architecture
             </motion.button>

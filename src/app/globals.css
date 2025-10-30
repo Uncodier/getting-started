@@ -17,6 +17,10 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 142 76% 60%;
+    /* CTA color tokens */
+    --color-cta: #0f1729;
+    --color-cta-hover: #0b1220;
+    --color-cta-active: #0a0f1b;
   }
 
 }
@@ -99,4 +103,36 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-scale-in {
   animation: scaleIn 0.3s ease-out;
+}
+
+@layer components {
+  /* Primary button utility for all CTAs */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    background-color: var(--color-cta);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-cta-hover);
+  }
+  .btn-primary:active {
+    background-color: var(--color-cta-active);
+  }
+  .btn-primary:focus-visible {
+    @apply ring-accent;
+  }
+
+  /* Non-interactive green accent utility */
+  .accent-green {
+    @apply text-accent;
+  }
+}
+
+@layer base {
+  /* Normalize default text links to avoid green implying clickability */
+  a {
+    @apply font-semibold text-foreground;
+  }
+  a:hover {
+    /* keep hover minimal to avoid confusion with non-clickables using green */
+  }
 }
