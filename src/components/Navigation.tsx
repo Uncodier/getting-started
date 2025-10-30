@@ -5,9 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Github, ExternalLink, Sun, Moon } from "lucide-react";
+import { Menu, X, Github, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
 
 const navigation = [
   { name: "Architecture", href: "/architecture" },
@@ -24,13 +23,7 @@ const repositories = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +54,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
             >
               <Image
-                src={mounted && theme === "light" ? "/MAKINARI_black.png" : "/MAKINARI.png"}
+                src="/MAKINARI.png"
                 alt="Makinari Logo"
                 width={120}
                 height={32}
@@ -118,33 +111,10 @@ export default function Navigation() {
               </div>
             </div>
 
-            {/* Theme Toggle */}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
-              aria-label={`Switch to ${mounted && theme === "light" ? "dark" : "light"} mode`}
-            >
-              {mounted && theme === "light" ? (
-                <Moon className="h-5 w-5" />
-              ) : (
-                <Sun className="h-5 w-5" />
-              )}
-            </button>
           </div>
 
-          {/* Mobile menu button and theme toggle */}
+          {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-accent hover:bg-muted transition-colors"
-              aria-label={`Switch to ${mounted && theme === "light" ? "dark" : "light"} mode`}
-            >
-              {mounted && theme === "light" ? (
-                <Moon className="h-5 w-5" />
-              ) : (
-                <Sun className="h-5 w-5" />
-              )}
-            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-accent hover:bg-muted transition-colors"

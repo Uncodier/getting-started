@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Database, Server, Workflow, ArrowRight, ExternalLink, Github, Cloud } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Database, Server, Workflow, ExternalLink, Github, Cloud } from "lucide-react";
+
 
 const components = [
   {
@@ -12,7 +12,6 @@ const components = [
     description: "Next.js frontend with analytics dashboard",
     icon: <Database className="h-6 w-6" />,
     color: "bg-blue-500",
-    position: { x: 50, y: 50 },
     tech: ["Next.js 15", "React 18", "TypeScript", "Tailwind CSS", "Supabase"],
     features: ["Analytics Dashboard", "Lead Management", "Campaign Tracking", "ROI Calculator"],
   },
@@ -23,7 +22,6 @@ const components = [
     description: "Backend API with AI agents and email processing",
     icon: <Server className="h-6 w-6" />,
     color: "bg-green-500",
-    position: { x: 450, y: 50 },
     tech: ["Next.js 15", "TypeScript", "AI SDK", "Puppeteer", "SendGrid"],
     features: ["AI Agents", "Email Processing", "Web Scraping", "API Integrations"],
   },
@@ -34,7 +32,6 @@ const components = [
     description: "Background jobs and workflow orchestration",
     icon: <Workflow className="h-6 w-6" />,
     color: "bg-purple-500",
-    position: { x: 450, y: 300 },
     tech: ["Temporal.io", "TypeScript", "Node.js", "Supabase"],
     features: ["Scheduled Jobs", "Workflow Management", "Task Queues", "Error Handling"],
   },
@@ -45,7 +42,6 @@ const components = [
     description: "PostgreSQL database with real-time subscriptions",
     icon: <Cloud className="h-6 w-6" />,
     color: "bg-orange-500",
-    position: { x: 250, y: 175 },
     tech: ["PostgreSQL", "Real-time", "Auth", "Storage", "Edge Functions"],
     features: ["User Authentication", "Real-time Data", "File Storage", "Edge Functions"],
   },
@@ -61,171 +57,637 @@ const connections = [
 ];
 
 export default function ArchitectureDiagram() {
-  const [hoveredComponent, setHoveredComponent] = useState<string | null>(null);
   const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  const [containerSize, setContainerSize] = useState({ width: 800, height: 400 });
+
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Handle responsive sizing
+  useEffect(() => {
+    const updateSize = () => {
+      const container = document.getElementById('diagram-container');
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        setContainerSize({ width: rect.width, height: rect.height });
+      }
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, [isClient]);
+
+  const onSidebarComponentClick = (componentId: string) => {
+    setSelectedComponent(selectedComponent === componentId ? null : componentId);
+  };
+
+  // Responsive positioning logic
+  const getResponsiveConfig = () => {
+    const isMobile = containerSize.width < 768;
+    const isTablet = containerSize.width >= 768 && containerSize.width < 1024;
+    
+    if (isMobile) {
+      return {
+        viewBox: "0 0 400 600",
+        nodeWidth: 120,
+        nodeHeight: 80,
+        fontSize: { title: 10, subtitle: 8, description: 7 },
+        spacing: { x: 20, y: 120 },
+        positions: {
+          marketFit: { x: 20, y: 50 },
+          api: { x: 20, y: 180 },
+          workflows: { x: 20, y: 310 },
+          supabase: { x: 20, y: 440 }
+        }
+      };
+    } else if (isTablet) {
+      return {
+        viewBox: "0 0 600 400",
+        nodeWidth: 160,
+        nodeHeight: 100,
+        fontSize: { title: 12, subtitle: 10, description: 8 },
+        spacing: { x: 30, y: 30 },
+        positions: {
+          marketFit: { x: 50, y: 50 },
+          api: { x: 280, y: 50 },
+          workflows: { x: 50, y: 200 },
+          supabase: { x: 280, y: 200 }
+        }
+      };
+    } else {
+      return {
+        viewBox: "0 0 600 400",
+        nodeWidth: 160,
+        nodeHeight: 90,
+        fontSize: { title: 12, subtitle: 10, description: 8 },
+        spacing: { x: 40, y: 40 },
+        positions: {
+          marketFit: { x: 50, y: 80 },
+          api: { x: 250, y: 80 },
+          workflows: { x: 450, y: 200 },
+          supabase: { x: 150, y: 200 }
+        }
+      };
+    }
+  };
+
+  const config = getResponsiveConfig();
 
   return (
     <section className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             System Architecture
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Understanding how our three repositories and database work together to create a comprehensive growth platform.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
           {/* Architecture Diagram */}
-          <div className="lg:col-span-2">
-            <div className="relative bg-muted/30 rounded-2xl p-8 min-h-[700px] w-full overflow-hidden">
-              {/* Background Grid */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="grid grid-cols-12 grid-rows-12 h-full">
-                  {Array.from({ length: 144 }).map((_, i) => (
-                    <div key={i} className="border border-border/20"></div>
-                  ))}
+          <div>
+            <div id="diagram-container" className="min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] w-full overflow-hidden flex items-center justify-center">
+              {!isClient ? (
+                <div className="h-full w-full flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading diagram...</p>
+                  </div>
                 </div>
-              </div>
-
-              {/* Components */}
-              <div className="relative z-10">
-                {components.map((component, index) => (
-                  <motion.div
-                    key={component.id}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2 + (index * 0.2), duration: 0.6 }}
-                    whileHover={{ scale: 1.05 }}
-                    onHoverStart={() => setHoveredComponent(component.id)}
-                    onHoverEnd={() => setHoveredComponent(null)}
-                    onClick={() => setSelectedComponent(selectedComponent === component.id ? null : component.id)}
-                    className={`absolute cursor-pointer transition-all duration-300 ${
-                      hoveredComponent === component.id ? 'z-20' : 'z-10'
-                    }`}
-                    style={{
-                      left: component.position.x,
-                      top: component.position.y,
-                    }}
+              ) : (
+                <div className="h-full w-full">
+                  <svg
+                    viewBox={config.viewBox}
+                    className="w-full h-full"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid meet"
+                    style={{ display: 'block', margin: '0 auto' }}
                   >
-                    <div className={`w-48 p-4 rounded-xl border-2 transition-all ${
-                      selectedComponent === component.id
-                        ? 'border-accent bg-accent/5 shadow-lg'
-                        : 'border-border bg-background hover:border-accent/50'
-                    }`}>
-                      <div className="flex items-center space-x-3 mb-3">
-                        <div className={`p-2 rounded-lg ${component.color} text-white`}>
-                          {component.icon}
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-sm">{component.title}</h3>
-                          <p className="text-xs text-muted-foreground">{component.name}</p>
-                        </div>
-                      </div>
-                      <p className="text-xs text-muted-foreground mb-3">
-                        {component.description}
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {component.tech.slice(0, 3).map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {component.tech.length > 3 && (
-                          <span className="px-2 py-1 text-xs bg-muted text-muted-foreground rounded">
-                            +{component.tech.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    {/* Definitions for arrows and gradients */}
+                    <defs>
+                      <marker
+                        id="arrowhead"
+                        markerWidth="10"
+                        markerHeight="7"
+                        refX="9"
+                        refY="3.5"
+                        orient="auto"
+                      >
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#3ECF8E" />
+                      </marker>
+                      
+                      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#3B82F6" />
+                        <stop offset="100%" stopColor="#1D4ED8" />
+                      </linearGradient>
+                      
+                      <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#10B981" />
+                        <stop offset="100%" stopColor="#059669" />
+                      </linearGradient>
+                      
+                      <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#8B5CF6" />
+                        <stop offset="100%" stopColor="#7C3AED" />
+                      </linearGradient>
+                      
+                      <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#F59E0B" />
+                        <stop offset="100%" stopColor="#D97706" />
+                      </linearGradient>
+                    </defs>
 
-                {/* Connection Lines */}
-                {connections.map((connection, index) => {
-                  const fromComponent = components.find(c => c.id === connection.from);
-                  const toComponent = components.find(c => c.id === connection.to);
-                  
-                  if (!fromComponent || !toComponent) return null;
+                    {/* Responsive Connection lines */}
+                    {(() => {
+                      const isMobile = containerSize.width < 768;
+                      const isTablet = containerSize.width >= 768 && containerSize.width < 1024;
+                      
+                      if (isMobile) {
+                        // Vertical layout connections
+                        return (
+                          <>
+                            {/* Growth Engine -> API Server */}
+                            <line
+                              x1={config.positions.marketFit.x + config.nodeWidth/2}
+                              y1={config.positions.marketFit.y + config.nodeHeight}
+                              x2={config.positions.api.x + config.nodeWidth/2}
+                              y2={config.positions.api.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.marketFit.x + config.nodeWidth/2} y={config.positions.marketFit.y + config.nodeHeight + 15} textAnchor="middle" fontSize="8" fill="#6B7280">
+                              API calls
+                            </text>
 
-                  const fromX = fromComponent.position.x + 96; // Center of component
-                  const fromY = fromComponent.position.y + 60;
-                  const toX = toComponent.position.x + 96;
-                  const toY = toComponent.position.y + 60;
+                            {/* API Server -> Workflows */}
+                            <line
+                              x1={config.positions.api.x + config.nodeWidth/2}
+                              y1={config.positions.api.y + config.nodeHeight}
+                              x2={config.positions.workflows.x + config.nodeWidth/2}
+                              y2={config.positions.workflows.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.api.x + config.nodeWidth/2} y={config.positions.api.y + config.nodeHeight + 15} textAnchor="middle" fontSize="8" fill="#6B7280">
+                              Triggers
+                            </text>
 
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ delay: 0.8 + (index * 0.2), duration: 0.8 }}
-                      className="absolute z-0"
+                            {/* Workflows -> Supabase */}
+                            <line
+                              x1={config.positions.workflows.x + config.nodeWidth/2}
+                              y1={config.positions.workflows.y + config.nodeHeight}
+                              x2={config.positions.supabase.x + config.nodeWidth/2}
+                              y2={config.positions.supabase.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.workflows.x + config.nodeWidth/2} y={config.positions.workflows.y + config.nodeHeight + 15} textAnchor="middle" fontSize="8" fill="#6B7280">
+                              Database
+                            </text>
+                          </>
+                        );
+                      } else if (isTablet) {
+                        // 2x2 grid connections
+                        return (
+                          <>
+                            {/* Growth Engine -> API Server */}
+                            <line
+                              x1={config.positions.marketFit.x + config.nodeWidth}
+                              y1={config.positions.marketFit.y + config.nodeHeight/2}
+                              x2={config.positions.api.x}
+                              y2={config.positions.api.y + config.nodeHeight/2}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={(config.positions.marketFit.x + config.positions.api.x + config.nodeWidth)/2} y={config.positions.marketFit.y + config.nodeHeight/2 - 5} textAnchor="middle" fontSize="9" fill="#6B7280">
+                              API calls
+                            </text>
+
+                            {/* Growth Engine -> Supabase */}
+                            <line
+                              x1={config.positions.marketFit.x + config.nodeWidth/2}
+                              y1={config.positions.marketFit.y + config.nodeHeight}
+                              x2={config.positions.supabase.x + config.nodeWidth/2}
+                              y2={config.positions.supabase.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.marketFit.x + config.nodeWidth/2} y={config.positions.marketFit.y + config.nodeHeight + 15} textAnchor="middle" fontSize="9" fill="#6B7280">
+                              Database
+                            </text>
+
+                            {/* API Server -> Workflows */}
+                            <line
+                              x1={config.positions.api.x + config.nodeWidth/2}
+                              y1={config.positions.api.y + config.nodeHeight}
+                              x2={config.positions.workflows.x + config.nodeWidth/2}
+                              y2={config.positions.workflows.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.api.x + config.nodeWidth/2} y={config.positions.api.y + config.nodeHeight + 15} textAnchor="middle" fontSize="9" fill="#6B7280">
+                              Triggers
+                            </text>
+
+                            {/* Workflows -> Supabase */}
+                            <line
+                              x1={config.positions.workflows.x + config.nodeWidth}
+                              y1={config.positions.workflows.y + config.nodeHeight/2}
+                              x2={config.positions.supabase.x}
+                              y2={config.positions.supabase.y + config.nodeHeight/2}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                              markerEnd="url(#arrowhead)"
+                            />
+                          </>
+                        );
+                      } else {
+                        // Desktop layout connections (50/50 split)
+                        return (
+                          <>
+                            {/* Growth Engine -> API Server */}
+                            <line
+                              x1={config.positions.marketFit.x + config.nodeWidth}
+                              y1={config.positions.marketFit.y + config.nodeHeight/2}
+                              x2={config.positions.api.x}
+                              y2={config.positions.api.y + config.nodeHeight/2}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="6,3"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={(config.positions.marketFit.x + config.positions.api.x + config.nodeWidth)/2} y={config.positions.marketFit.y + config.nodeHeight/2 - 8} textAnchor="middle" fontSize="10" fill="#6B7280">
+                              API calls
+                            </text>
+
+                            {/* Growth Engine -> Supabase */}
+                            <line
+                              x1={config.positions.marketFit.x + config.nodeWidth/2}
+                              y1={config.positions.marketFit.y + config.nodeHeight}
+                              x2={config.positions.supabase.x + config.nodeWidth/2}
+                              y2={config.positions.supabase.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="6,3"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.marketFit.x + config.nodeWidth/2} y={config.positions.marketFit.y + config.nodeHeight + 15} textAnchor="middle" fontSize="10" fill="#6B7280">
+                              Database
+                            </text>
+
+                            {/* API Server -> Workflows */}
+                            <line
+                              x1={config.positions.api.x + config.nodeWidth/2}
+                              y1={config.positions.api.y + config.nodeHeight}
+                              x2={config.positions.workflows.x + config.nodeWidth/2}
+                              y2={config.positions.workflows.y}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="6,3"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={config.positions.api.x + config.nodeWidth/2 + 8} y={config.positions.api.y + config.nodeHeight + 15} textAnchor="start" fontSize="10" fill="#6B7280">
+                              Triggers
+                            </text>
+
+                            {/* Workflows -> Growth Engine */}
+                            <path
+                              d={`M ${config.positions.workflows.x} ${config.positions.workflows.y + config.nodeHeight/2} Q ${(config.positions.workflows.x + config.positions.marketFit.x)/2} ${config.positions.workflows.y - 40} ${config.positions.marketFit.x + config.nodeWidth} ${config.positions.marketFit.y + config.nodeHeight/2}`}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="6,3"
+                              fill="none"
+                              markerEnd="url(#arrowhead)"
+                            />
+                            <text x={(config.positions.workflows.x + config.positions.marketFit.x)/2} y={config.positions.workflows.y - 25} textAnchor="middle" fontSize="10" fill="#6B7280">
+                              Updates
+                            </text>
+
+                            {/* API Server -> Supabase */}
+                            <line
+                              x1={config.positions.api.x + config.nodeWidth/2}
+                              y1={config.positions.api.y + config.nodeHeight}
+                              x2={config.positions.supabase.x + config.nodeWidth}
+                              y2={config.positions.supabase.y + config.nodeHeight/2}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="6,3"
+                              markerEnd="url(#arrowhead)"
+                            />
+
+                            {/* Workflows -> Supabase */}
+                            <line
+                              x1={config.positions.workflows.x}
+                              y1={config.positions.workflows.y + config.nodeHeight/2}
+                              x2={config.positions.supabase.x + config.nodeWidth}
+                              y2={config.positions.supabase.y + config.nodeHeight/2}
+                              stroke="#3ECF8E"
+                              strokeWidth="2"
+                              strokeDasharray="6,3"
+                              markerEnd="url(#arrowhead)"
+                            />
+                          </>
+                        );
+                      }
+                    })()}
+
+                    {/* Growth Engine Node */}
+                    <g
+                      className="cursor-pointer"
+                      onClick={() => setSelectedComponent(selectedComponent === 'market-fit' ? null : 'market-fit')}
                     >
-                      <svg
-                        width="600"
-                        height="400"
-                        className="absolute"
-                        style={{ left: -100, top: -50 }}
+                      <rect
+                        x={config.positions.marketFit.x}
+                        y={config.positions.marketFit.y}
+                        width={config.nodeWidth}
+                        height={config.nodeHeight}
+                        rx="8"
+                        fill={selectedComponent === 'market-fit' ? '#F0FDF4' : '#FFFFFF'}
+                        stroke={selectedComponent === 'market-fit' ? '#22C55E' : '#D1D5DB'}
+                        strokeWidth="2"
+                        className="hover:stroke-green-300 transition-colors"
+                      />
+                      {/* Icon Row */}
+                      <circle 
+                        cx={config.positions.marketFit.x + config.nodeWidth/2} 
+                        cy={config.positions.marketFit.y + 15} 
+                        r="10" 
+                        fill="url(#blueGradient)" 
+                      />
+                      <text 
+                        x={config.positions.marketFit.x + config.nodeWidth/2} 
+                        y={config.positions.marketFit.y + 20} 
+                        textAnchor="middle" 
+                        fontSize="10" 
+                        fill="white" 
+                        fontWeight="bold"
                       >
-                        <motion.path
-                          d={`M ${fromX} ${fromY} Q ${(fromX + toX) / 2} ${Math.min(fromY, toY) - 50} ${toX} ${toY}`}
-                          stroke="hsl(var(--accent))"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeDasharray="5,5"
-                          className="opacity-60"
-                        />
-                        <motion.circle
-                          cx={toX}
-                          cy={toY}
-                          r="4"
-                          fill="hsl(var(--accent))"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 1 + index * 0.2 }}
-                        />
+                        DB
+                      </text>
+                      {/* Text Row */}
+                      <text 
+                        x={config.positions.marketFit.x + config.nodeWidth/2} 
+                        y={config.positions.marketFit.y + 35} 
+                        fontSize={config.fontSize.title} 
+                        fill="#1F2937" 
+                        fontWeight="600"
+                        textAnchor="middle"
+                      >
+                        Growth Engine
+                      </text>
+                      <text 
+                        x={config.positions.marketFit.x + config.nodeWidth/2} 
+                        y={config.positions.marketFit.y + 50} 
+                        fontSize={config.fontSize.subtitle} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        Market Fit
+                      </text>
+                      <text 
+                        x={config.positions.marketFit.x + config.nodeWidth/2} 
+                        y={config.positions.marketFit.y + 65} 
+                        fontSize={config.fontSize.description} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        Next.js frontend
+                      </text>
+                    </g>
+
+                    {/* API Server Node */}
+                    <g
+                      className="cursor-pointer"
+                      onClick={() => setSelectedComponent(selectedComponent === 'api' ? null : 'api')}
+                    >
+                      <rect
+                        x={config.positions.api.x}
+                        y={config.positions.api.y}
+                        width={config.nodeWidth}
+                        height={config.nodeHeight}
+                        rx="8"
+                        fill={selectedComponent === 'api' ? '#F0FDF4' : '#FFFFFF'}
+                        stroke={selectedComponent === 'api' ? '#22C55E' : '#D1D5DB'}
+                        strokeWidth="2"
+                        className="hover:stroke-green-300 transition-colors"
+                      />
+                      {/* Icon Row */}
+                      <rect 
+                        x={config.positions.api.x + config.nodeWidth/2 - 10} 
+                        y={config.positions.api.y + 5} 
+                        width="20" 
+                        height="20" 
+                        rx="4" 
+                        fill="url(#greenGradient)" 
+                      />
+                      <text 
+                        x={config.positions.api.x + config.nodeWidth/2} 
+                        y={config.positions.api.y + 18} 
+                        textAnchor="middle" 
+                        fontSize="10" 
+                        fill="white" 
+                        fontWeight="bold"
+                      >
+                        API
+                      </text>
+                      {/* Text Row */}
+                      <text 
+                        x={config.positions.api.x + config.nodeWidth/2} 
+                        y={config.positions.api.y + 35} 
+                        fontSize={config.fontSize.title} 
+                        fill="#1F2937" 
+                        fontWeight="600"
+                        textAnchor="middle"
+                      >
+                        AI Agents
+                      </text>
+                      <text 
+                        x={config.positions.api.x + config.nodeWidth/2} 
+                        y={config.positions.api.y + 50} 
+                        fontSize={config.fontSize.subtitle} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        API Server
+                      </text>
+                      <text 
+                        x={config.positions.api.x + config.nodeWidth/2} 
+                        y={config.positions.api.y + 65} 
+                        fontSize={config.fontSize.description} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        Backend API
+                      </text>
+                    </g>
+
+                    {/* Workflows Node */}
+                    <g
+                      className="cursor-pointer"
+                      onClick={() => setSelectedComponent(selectedComponent === 'workflows' ? null : 'workflows')}
+                    >
+                      <rect
+                        x={config.positions.workflows.x}
+                        y={config.positions.workflows.y}
+                        width={config.nodeWidth}
+                        height={config.nodeHeight}
+                        rx="8"
+                        fill={selectedComponent === 'workflows' ? '#F0FDF4' : '#FFFFFF'}
+                        stroke={selectedComponent === 'workflows' ? '#22C55E' : '#D1D5DB'}
+                        strokeWidth="2"
+                        className="hover:stroke-green-300 transition-colors"
+                      />
+                      {/* Icon Row */}
+                      <rect 
+                        x={config.positions.workflows.x + config.nodeWidth/2 - 10} 
+                        y={config.positions.workflows.y + 5} 
+                        width="20" 
+                        height="20" 
+                        rx="4" 
+                        fill="url(#purpleGradient)" 
+                      />
+                      <text 
+                        x={config.positions.workflows.x + config.nodeWidth/2} 
+                        y={config.positions.workflows.y + 18} 
+                        textAnchor="middle" 
+                        fontSize="10" 
+                        fill="white" 
+                        fontWeight="bold"
+                      >
+                        WF
+                      </text>
+                      {/* Text Row */}
+                      <text 
+                        x={config.positions.workflows.x + config.nodeWidth/2} 
+                        y={config.positions.workflows.y + 35} 
+                        fontSize={config.fontSize.title} 
+                        fill="#1F2937" 
+                        fontWeight="600"
+                        textAnchor="middle"
+                      >
+                        Temporal
+                      </text>
+                      <text 
+                        x={config.positions.workflows.x + config.nodeWidth/2} 
+                        y={config.positions.workflows.y + 50} 
+                        fontSize={config.fontSize.subtitle} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        Workflows
+                      </text>
+                      <text 
+                        x={config.positions.workflows.x + config.nodeWidth/2} 
+                        y={config.positions.workflows.y + 65} 
+                        fontSize={config.fontSize.description} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        Background jobs
+                      </text>
+                    </g>
+
+                    {/* Supabase Node */}
+                    <g
+                      className="cursor-pointer"
+                      onClick={() => setSelectedComponent(selectedComponent === 'supabase' ? null : 'supabase')}
+                    >
+                      <rect
+                        x={config.positions.supabase.x}
+                        y={config.positions.supabase.y}
+                        width={config.nodeWidth}
+                        height={config.nodeHeight}
+                        rx="8"
+                        fill={selectedComponent === 'supabase' ? '#F0FDF4' : '#FFFFFF'}
+                        stroke={selectedComponent === 'supabase' ? '#22C55E' : '#D1D5DB'}
+                        strokeWidth="2"
+                        className="hover:stroke-green-300 transition-colors"
+                      />
+                      {/* Icon Row */}
+                      <circle 
+                        cx={config.positions.supabase.x + config.nodeWidth/2} 
+                        cy={config.positions.supabase.y + 15} 
+                        r="10" 
+                        fill="url(#orangeGradient)" 
+                      />
+                      <text 
+                        x={config.positions.supabase.x + config.nodeWidth/2} 
+                        y={config.positions.supabase.y + 20} 
+                        textAnchor="middle" 
+                        fontSize="10" 
+                        fill="white" 
+                        fontWeight="bold"
+                      >
+                        DB
+                      </text>
+                      {/* Text Row */}
+                      <text 
+                        x={config.positions.supabase.x + config.nodeWidth/2} 
+                        y={config.positions.supabase.y + 35} 
+                        fontSize={config.fontSize.title} 
+                        fill="#1F2937" 
+                        fontWeight="600"
+                        textAnchor="middle"
+                      >
+                        Database & Auth
+                      </text>
+                      <text 
+                        x={config.positions.supabase.x + config.nodeWidth/2} 
+                        y={config.positions.supabase.y + 50} 
+                        fontSize={config.fontSize.subtitle} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        Supabase
+                      </text>
+                      <text 
+                        x={config.positions.supabase.x + config.nodeWidth/2} 
+                        y={config.positions.supabase.y + 65} 
+                        fontSize={config.fontSize.description} 
+                        fill="#6B7280"
+                        textAnchor="middle"
+                      >
+                        PostgreSQL
+                      </text>
+                    </g>
                       </svg>
-                      <div
-                        className="absolute text-xs text-muted-foreground bg-background px-2 py-1 rounded"
-                        style={{
-                          left: (fromX + toX) / 2 - 30,
-                          top: Math.min(fromY, toY) - 30,
-                        }}
-                      >
-                        {connection.type}
                       </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+              )}
             </div>
           </div>
 
           {/* Component Details */}
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <h3 className="text-xl font-semibold">Component Details</h3>
             
-            {components.map((component, index) => (
-              <motion.div
+            {components.map((component) => (
+              <div
                 key={component.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2 + (index * 0.1) }}
                 className={`p-4 rounded-lg border transition-all cursor-pointer ${
                   selectedComponent === component.id
                     ? 'border-accent bg-accent/5'
                     : 'border-border hover:border-accent/50'
                 }`}
-                onClick={() => setSelectedComponent(selectedComponent === component.id ? null : component.id)}
+                onClick={() => onSidebarComponentClick(component.id)}
               >
                 <div className="flex items-center space-x-3 mb-2">
                   <div className={`p-2 rounded-lg ${component.color} text-white`}>
@@ -268,20 +730,15 @@ export default function ArchitectureDiagram() {
                     <ExternalLink className="h-3 w-3" />
                   </a>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Data Flow Explanation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-          className="mt-16 bg-muted/30 rounded-2xl p-8"
-        >
-          <h3 className="text-2xl font-semibold mb-6 text-center">How It All Works Together</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="mt-12 lg:mt-16 bg-muted/30 rounded-2xl p-6 lg:p-8">
+          <h3 className="text-xl lg:text-2xl font-semibold mb-4 lg:mb-6 text-center">How It All Works Together</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             <div className="text-center">
               <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mx-auto mb-4">
                 <Database className="h-6 w-6" />
@@ -323,7 +780,7 @@ export default function ArchitectureDiagram() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

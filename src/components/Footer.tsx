@@ -3,16 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Github, ExternalLink, Mail } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
 
 export default function Footer() {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <footer className="bg-muted/50 border-t border-border">
@@ -21,13 +13,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              <Image
-                src={mounted && theme === "light" ? "/MAKINARI_black.png" : "/MAKINARI_white.svg"}
-                alt="Makinari Logo"
-                width={120}
-                height={32}
-                className="h-8 w-auto"
-              />
+                    <Image
+                      src="/MAKINARI_black.png"
+                      alt="Makinari Logo"
+                      width={120}
+                      height={32}
+                      className="h-8 w-auto"
+                    />
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">
               An AI-powered marketing analytics and automation platform that transforms how businesses manage leads, campaigns, and growth.
