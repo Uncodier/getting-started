@@ -26,7 +26,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://github.com/Uncodier/makinari"
+                href="https://github.com/Uncodier"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground transition-colors"

@@ -138,7 +138,7 @@ export default function AnimatedHero() {
               </motion.a>
 
               <motion.a
-                href="https://github.com/Uncodier/market-fit"
+                href="https://github.com/Uncodier"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
