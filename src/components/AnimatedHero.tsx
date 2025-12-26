@@ -14,7 +14,7 @@ if (typeof window !== "undefined") {
 }
 
 const deploymentCommands = [
-  "git clone https://github.com/your-org/market-fit.git",
+  "git clone https://github.com/Uncodier/market-fit.git",
   "cd market-fit && npm install",
   "cp .env.example .env.local",
   "npm run dev"
@@ -138,7 +138,7 @@ export default function AnimatedHero() {
               </motion.a>
 
               <motion.a
-                href="https://github.com/your-org/market-fit"
+                href="https://github.com/Uncodier/market-fit"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}

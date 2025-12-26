@@ -204,7 +204,7 @@ export default function Contributing() {
               <h3 className="text-lg font-medium mb-4">Development Setup</h3>
               <CodeBlock
                 code={`# Fork and clone the repository
-git clone https://github.com/your-username/market-fit.git
+git clone https://github.com/Uncodier/market-fit.git
 cd market-fit
 
 # Install dependencies
@@ -375,7 +375,7 @@ npm test`}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://github.com/your-org/makinari"
+              href="https://github.com/Uncodier/makinari"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 px-6 py-3 btn-primary font-medium rounded-lg"

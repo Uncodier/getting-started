@@ -15,9 +15,9 @@ const navigation = [
 ];
 
 const repositories = [
-  { name: "market-fit", href: "https://github.com/your-org/market-fit", description: "Growth Engine" },
-  { name: "api", href: "https://github.com/your-org/api", description: "API Server" },
-  { name: "workflows", href: "https://github.com/your-org/workflows", description: "Temporal Workflows" },
+  { name: "market-fit", href: "https://github.com/Uncodier/market-fit", description: "Growth Engine" },
+  { name: "api", href: "https://github.com/Uncodier/API", description: "API Server" },
+  { name: "workflows", href: "https://github.com/Uncodier/workflows", description: "Temporal Workflows" },
 ];
 
 export default function Navigation() {

@@ -45,13 +45,13 @@ const repositories = [
     description: "Next.js frontend with analytics dashboard",
     tech: ["Next.js 15", "React 18", "TypeScript", "Tailwind CSS", "Supabase"],
     commands: [
-      "git clone https://github.com/your-org/market-fit.git",
+      "git clone https://github.com/Uncodier/market-fit.git",
       "cd market-fit",
       "npm install",
       "cp .env.example .env.local",
       "npm run dev"
     ],
-    link: "https://github.com/your-org/market-fit",
+    link: "https://github.com/Uncodier/market-fit",
   },
   {
     name: "api",
@@ -59,13 +59,13 @@ const repositories = [
     description: "AI agents, email processing, and integrations",
     tech: ["Next.js 15", "TypeScript", "AI SDK", "Puppeteer", "SendGrid"],
     commands: [
-      "git clone https://github.com/your-org/api.git",
+      "git clone https://github.com/Uncodier/API.git",
       "cd api",
       "npm install",
       "cp .env.example .env.local",
       "npm run dev"
     ],
-    link: "https://github.com/your-org/api",
+    link: "https://github.com/Uncodier/API",
   },
   {
     name: "workflows",
@@ -73,13 +73,13 @@ const repositories = [
     description: "Background jobs and workflow orchestration",
     tech: ["Temporal.io", "TypeScript", "Node.js", "Supabase"],
     commands: [
-      "git clone https://github.com/your-org/workflows.git",
+      "git clone https://github.com/Uncodier/workflows.git",
       "cd workflows",
       "npm install",
       "cp .env.example .env",
       "npm run start-worker"
     ],
-    link: "https://github.com/your-org/workflows",
+    link: "https://github.com/Uncodier/workflows",
   },
 ];
 

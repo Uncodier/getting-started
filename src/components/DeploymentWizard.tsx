@@ -36,14 +36,14 @@ const repositories = [
       ]
     },
     commands: [
-      "git clone https://github.com/your-org/market-fit.git",
+      "git clone https://github.com/Uncodier/market-fit.git",
       "cd market-fit",
       "npm install",
       "cp .env.example .env.local",
       "# Configure your environment variables",
       "npm run dev"
     ],
-    link: "https://github.com/your-org/market-fit",
+    link: "https://github.com/Uncodier/market-fit",
   },
   {
     id: "api",
@@ -75,14 +75,14 @@ const repositories = [
       ]
     },
     commands: [
-      "git clone https://github.com/your-org/api.git",
+      "git clone https://github.com/Uncodier/API.git",
       "cd api",
       "npm install",
       "cp .env.example .env.local",
       "# Configure your environment variables",
       "npm run dev"
     ],
-    link: "https://github.com/your-org/api",
+    link: "https://github.com/Uncodier/API",
   },
   {
     id: "workflows",
@@ -113,14 +113,14 @@ const repositories = [
       ]
     },
     commands: [
-      "git clone https://github.com/your-org/workflows.git",
+      "git clone https://github.com/Uncodier/workflows.git",
       "cd workflows",
       "npm install",
       "cp .env.example .env",
       "# Configure your environment variables",
       "npm run start-worker"
     ],
-    link: "https://github.com/your-org/workflows",
+    link: "https://github.com/Uncodier/workflows",
   },
 ];
 

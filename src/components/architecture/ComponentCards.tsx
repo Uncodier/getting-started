@@ -41,19 +41,21 @@ export default function ComponentCards({ selectedId, onSelect }: Props) {
               ))}
             </div>
           </div>
-          <div className="mt-3 pt-3 border-t border-border">
-            <a
-              href={`https://github.com/your-org/${component.name}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-1 text-sm text-foreground transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Github className="h-4 w-4" />
-              <span>View Repository</span>
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          </div>
+          {component.id !== 'supabase' && (
+            <div className="mt-3 pt-3 border-t border-border">
+              <a
+                href={`https://github.com/Uncodier/${component.id === 'api' ? 'API' : component.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-1 text-sm text-foreground transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Github className="h-4 w-4" />
+                <span>View Repository</span>
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+          )}
         </div>
       ))}
     </div>

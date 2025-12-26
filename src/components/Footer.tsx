@@ -26,7 +26,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://github.com/your-org/makinari"
+                href="https://github.com/Uncodier/makinari"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground transition-colors"
@@ -70,7 +70,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://github.com/your-org/market-fit"
+                  href="https://github.com/Uncodier/market-fit"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center space-x-1 text-muted-foreground transition-colors"
@@ -81,7 +81,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/your-org/api"
+                  href="https://github.com/Uncodier/API"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center space-x-1 text-muted-foreground transition-colors"
@@ -92,7 +92,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/your-org/workflows"
+                  href="https://github.com/Uncodier/workflows"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center space-x-1 text-muted-foreground transition-colors"
@@ -115,7 +115,7 @@ export default function Footer() {
                 Contributing
               </Link>
               <a
-                href="https://github.com/your-org/makinari/blob/main/LICENSE"
+                href="https://github.com/Uncodier/makinari/blob/main/LICENSE"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground transition-colors"
